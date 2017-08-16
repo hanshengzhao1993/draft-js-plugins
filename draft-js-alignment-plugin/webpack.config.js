@@ -14,6 +14,12 @@ module.exports = {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?modules&importLoaders=1&localIdentName=draftJsEmojiPlugin__[local]__[hash:base64:5]!postcss-loader' }),
       },
+      {
+        test: /plugin\.css$/,
+        loaders: [
+          'style', 'css',
+        ],
+      },
     ],
   },
 

@@ -56,14 +56,32 @@ export default class Toolbar extends React.Component {
       if (!this.toolbar) return;
       const relativeParent = getRelativeParent(this.toolbar.parentElement);
       const relativeRect = (relativeParent || document.body).getBoundingClientRect();
-      const selectionRect = getVisibleSelectionRect(window);
+      const selectionRect = getVisibleSelectionRect(window);      
 
       if (!selectionRect) return;
-
       const position = {
         top: (selectionRect.top - relativeRect.top) - toolbarHeight,
         left: (selectionRect.left - relativeRect.left) + (selectionRect.width / 2),
       };
+
+      const width = window.innerWidth;
+
+      console.log(this.toolbar)
+
+      // The screen is below a certain width
+      if(width < 850){
+    
+        // on the right side
+        if( selectionRect.left/width > 0.8 ){
+          const movedWidthLeft = (146 - (width - selectionRect.left)) / 2;
+          position.left = selectionRect.left - movedWidthLeft;
+        }
+
+        // moving the toolbox on the left side
+        if( selectionRect.left/width < 0.15 ){
+          position.left = position.left + 50;
+        }
+      }
       this.setState({ position });
     });
   };
@@ -74,6 +92,8 @@ export default class Toolbar extends React.Component {
     const selection = store.getItem('getEditorState')().getSelection();
     const isVisible = (!selection.isCollapsed() || overrideContent) && selection.getHasFocus();
     const style = { ...position };
+
+    console.log('WHAT AM I CONCOLE LOGGING: ',selection)
 
     if (isVisible) {
       style.visibility = 'visible';

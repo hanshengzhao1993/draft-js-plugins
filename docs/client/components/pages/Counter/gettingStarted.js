@@ -14,7 +14,7 @@ const { CharCounter } = counterPlugin;
 // passed in, although it is possible to pass in multiple plugins.
 // The Counter is placed after the Editor.
 const MyEditor = ({ editorState, onChange }) => (
-  <div>
+<div>
     <Editor
       editorState={editorState}
       onChange={onChange}
